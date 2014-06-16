@@ -1,4 +1,4 @@
 PHP-Brainfuck
 =============
 
-An PHP interpreter for Brainfuck.
+A PHP interpreter for Brainfuck.
