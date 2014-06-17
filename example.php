@@ -1,14 +1,11 @@
-PHP-Brainfuck
-=============
-
-A PHP interpreter for Brainfuck.
-
-## Hello world
-An example for printing out Hello world with Brainfuck
-
-```php
 <?php
 
+/**
+ * ----------------------------------------
+ * Example - PHP Brainfuck Interpreter
+ * ----------------------------------------
+ * https://github.com/SteveWinfield/PHP-Brainfuck
+**/
 include 'interpreter.php';
 
 // Create instance
@@ -22,4 +19,3 @@ $program->invokeCommand('++');
 
 // Print out program output
 echo $program->getBuffer();
-```
