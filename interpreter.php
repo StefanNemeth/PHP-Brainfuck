@@ -45,9 +45,8 @@ class BrainfuckInstance {
 				$this->buffer .= chr($this->memory[$this->index]);
 			},
 			',' => function () {
-				$stdIn = fopen('php://stdin', 'r');
-				$this->memory[$this->index] = ord(fgets($stdIn,1));
-				fclose($stdIn);
+				fscanf(STDIN, '%c', $chr);
+				$this->memory[$this->index] = ord($chr);
 			}
 		);
 	}
@@ -87,9 +86,10 @@ class BrainfuckInstance {
 		$file = @file_get_contents($fileName);
 		if ($file) {
 			$this->invokeCommand ($file);
-			return;
+			return true;
 		}
 		throw new Exception ('File not found.');
+		return false;
 	}
 	
 	private $buffer;
@@ -100,4 +100,4 @@ class BrainfuckInstance {
 	public static function getInstance () {
 		return new BrainfuckInstance();
 	}
-} 
+}
