@@ -11,13 +11,23 @@
  * https://github.com/SteveWinfield/PHP-Brainfuck
 **/
 class BrainfuckInstance {
-	public function getBuffer() {
-		return $this->buffer;
+	public function getOutputBuffer() {
+		return $this->outputBuffer;
 	}
 	
-	public function clearBuffer() {
-		$m = $this->buffer;
-		$this->buffer = '';
+	public function clearOutputBuffer() {
+		$m = $this->outputBuffer;
+		$this->outputBuffer = '';
+		return $m;
+	}
+	
+	public function getInputBuffer() {
+		return $this->inputBuffer;
+	}
+	
+	public function clearInputBuffer() {
+		$m = $this->inputBuffer;
+		$this->inputBuffer = '';
 		return $m;
 	}
 	
@@ -42,11 +52,23 @@ class BrainfuckInstance {
 				}
 			},
 			'.' => function () {
-				$this->buffer .= chr($this->memory[$this->index]);
+				$this->outputBuffer .= chr($this->memory[$this->index]);
 			},
 			',' => function () {
-				fscanf(STDIN, '%c', $chr);
-				$this->memory[$this->index] = ord($chr);
+				$char = chr(0);
+				if (strlen($this->inputBuffer) > 0) {
+					$char = substr($this->inputBuffer, 0, 1);
+					$this->inputBuffer = substr($this->inputBuffer, 1);
+				} else {
+					fscanf(STDIN, '%s', $result);
+					if (($len = strlen($result)) > 0) {
+						if ($len > 1) {
+							$this->inputBuffer = substr($result, 1);
+						}
+						$char = $result[0];
+					}
+				}
+				$this->memory[$this->index] = ord($char);
 			}
 		);
 	}
@@ -92,7 +114,8 @@ class BrainfuckInstance {
 		return false;
 	}
 	
-	private $buffer;
+	private $outputBuffer;
+	private $inputBuffer;
 	private $index;
 	private $memory;
 	private $handler;

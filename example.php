@@ -18,4 +18,4 @@ $program->invokeFile('helloworld.bf');
 $program->invokeCommand('++');
 
 // Print out program output
-echo $program->getBuffer();
+echo $program->getOutputBuffer();
